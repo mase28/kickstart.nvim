@@ -675,7 +675,20 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        clangd = {},
+        clangd = {
+          cmd = {
+            'clangd',
+            '--header-insertion=never',
+            '--completion-style=detailed',
+          },
+          settings = {
+            CompileFlags = {
+              Remove = {
+                '-fmodules-ts',
+              },
+            },
+          },
+        },
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -885,17 +898,10 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'aktersnurra/no-clown-fiesta.nvim',
+    'rebelot/kanagawa.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
-      require('no-clown-fiesta').load {
-        theme = 'dark',
-        styles = {
-          type = { bold = true },
-          lsp = { underline = false },
-          match_paren = { underline = true },
-        },
-      }
+      require('kanagawa').load 'dragon'
     end,
     lazy = false,
     -- Load the colorscheme here.
